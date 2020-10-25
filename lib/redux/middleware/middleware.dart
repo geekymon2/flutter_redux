@@ -7,7 +7,7 @@ void storeOptionsMiddleware(
   AppState state = store.state;
 
   if (action is ToggleBoldAction) {
-    state = state.copyWith(showReaderOptions: action.isBold);
+    state = state.copyWith(bold: action.isBold);
   }
 
   next(action);
