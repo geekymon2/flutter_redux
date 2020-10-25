@@ -1,10 +1,10 @@
-# Shared Preferences Example
+# Flutter Redux Example
 
-Flutter Shared Preferences Example
+Flutter Redux Example
 
 ## Getting Started
 
-This project is an example to showcase Flutter Shared Preferences
+This project is an example to showcase Flutter Redux
 
 ## Follow Geeky Mon2
 
