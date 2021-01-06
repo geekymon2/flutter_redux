@@ -1,3 +1,5 @@
+import 'package:reduxdemoapp/model/usermodel.dart';
+
 class ToggleBoldAction {
   final bool isBold;
   ToggleBoldAction(this.isBold);
@@ -14,3 +16,8 @@ class SetFontSizeAction {
 }
 
 class FetchAPIDataAction {}
+
+class APIDataLoadedAction {
+  final List<User> userList;
+  APIDataLoadedAction(this.userList);
+}

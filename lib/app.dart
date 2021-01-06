@@ -102,7 +102,13 @@ class ReduxDemoApp extends StatelessWidget {
                                     .dispatch(FetchAPIDataAction());
                               },
                               icon: Icon(Icons.get_app),
-                              label: Text("Call API")),
+                              label: Text("Load Users List (API call)"),
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Colors.black,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(50))),
                         ],
                       ),
                     ),
