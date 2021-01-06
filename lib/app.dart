@@ -96,6 +96,13 @@ class ReduxDemoApp extends StatelessWidget {
                               ),
                             ),
                           ),
+                          FlatButton.icon(
+                              onPressed: () {
+                                StoreProvider.of<AppState>(context)
+                                    .dispatch(FetchAPIDataAction());
+                              },
+                              icon: Icon(Icons.get_app),
+                              label: Text("Call API")),
                         ],
                       ),
                     ),

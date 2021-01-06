@@ -12,3 +12,5 @@ class SetFontSizeAction {
   final double fontSize;
   SetFontSizeAction(this.fontSize);
 }
+
+class FetchAPIDataAction {}

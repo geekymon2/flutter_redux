@@ -1,13 +1,24 @@
 import 'package:redux/redux.dart';
+import 'package:redux_api_middleware/redux_api_middleware.dart';
 import 'package:reduxdemoapp/redux/actions/actions.dart';
 import 'package:reduxdemoapp/state/appstate.dart';
 
 void storeOptionsMiddleware(
     Store<AppState> store, dynamic action, NextDispatcher next) {
-  AppState state = store.state;
+  if (action is FetchAPIDataAction) {
+    var fetchDataAction = {
+      RSAA: {
+        'method': 'GET',
+        'endpoint': 'http://url.com/api/test',
+        'types': [
+          'request',
+          'success',
+          'failure',
+        ],
+      },
+    };
 
-  if (action is ToggleBoldAction) {
-    state = state.copyWith(bold: action.isBold);
+    store.dispatch(fetchDataAction);
   }
 
   next(action);
