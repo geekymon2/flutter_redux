@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:reduxdemoapp/redux/actions/actions.dart';
 import 'package:reduxdemoapp/redux/selectors/selectors.dart';
 import 'package:reduxdemoapp/state/appstate.dart';
 
@@ -48,21 +49,33 @@ class ReduxDemoApp extends StatelessWidget {
                                           child: Text("Extra Large"),
                                           value: 40.0)
                                     ],
-                                    onChanged: (value) {}),
+                                    onChanged: (value) {
+                                      StoreProvider.of<AppState>(context)
+                                          .dispatch(SetFontSizeAction(value));
+                                    }),
                               ),
                             ],
                           ),
                           Row(
                             children: [
                               Text("Bold"),
-                              Checkbox(value: vm.isBold, onChanged: (value) {}),
+                              Checkbox(
+                                  value: vm.isBold,
+                                  onChanged: (value) {
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(ToggleBoldAction(value));
+                                  }),
                             ],
                           ),
                           Row(
                             children: [
                               Text("Italics"),
                               Checkbox(
-                                  value: vm.isItalic, onChanged: (value) {}),
+                                  value: vm.isItalic,
+                                  onChanged: (value) {
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(ToggleItalicsAction(value));
+                                  }),
                             ],
                           ),
                           Padding(

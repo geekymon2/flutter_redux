@@ -1,5 +1,5 @@
 name: reduxdemoapp
-description: A new Flutter project.
+description: Redux Demo App.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
