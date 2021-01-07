@@ -1,6 +1,11 @@
 # Flutter Redux Example
 
-Flutter Redux Example
+## Flutter Redux Example
+
+>### Application State is managed through redux
+>### Calls a random user generator API to show API calls via middleware
+>### Lists the users in a ListView Widget Screen
+
 
 ## Getting Started
 

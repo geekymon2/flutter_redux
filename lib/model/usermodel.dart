@@ -3,8 +3,9 @@ class User {
   String _gender;
   String _location;
   String _email;
+  String _thumbnail;
 
-  User(this._name, this._gender, this._location, this._email);
+  User(this._name, this._gender, this._location, this._email, this._thumbnail);
 
   String get name {
     return _name;
@@ -20,5 +21,9 @@ class User {
 
   String get email {
     return _email;
+  }
+
+  String get thumbnail {
+    return _thumbnail;
   }
 }

@@ -21,6 +21,11 @@ class Users extends StatelessWidget {
             User user = vm.userList[i];
 
             return ListTile(
+              leading: new CircleAvatar(
+                radius: 30.0,
+                backgroundImage: NetworkImage(user.thumbnail),
+                backgroundColor: Colors.transparent,
+              ),
               subtitle: Text(user.location),
               title: Text(
                 user.name + " (" + user.email + ")",

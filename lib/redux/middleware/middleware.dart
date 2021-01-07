@@ -9,14 +9,11 @@ final String apiUrl = "https://randomuser.me/api/?results=10";
 
 void storeOptionsMiddleware(
     Store<AppState> store, dynamic action, NextDispatcher next) {
-  
   if (action is FetchAPIDataAction) {
     fetchUsers().then((value) {
       store.dispatch(APIDataLoadedAction(value));
     });
   }
-
-
 
   next(action);
 }
@@ -28,8 +25,8 @@ Future<List<User>> fetchUsers() async {
 
   //covert JSON to strongly typed list
   for (var user in userListRaw) {
-    userList.add(User(
-        getName(user), getGender(user), getLocation(user), getEmail(user)));
+    userList.add(User(getName(user), getGender(user), getLocation(user),
+        getEmail(user), getThumbnail(user)));
   }
 
   return userList;
@@ -53,4 +50,8 @@ String getGender(dynamic user) {
 
 String getEmail(dynamic user) {
   return user['email'];
+}
+
+String getThumbnail(dynamic user) {
+  return user['picture']['large'];
 }
