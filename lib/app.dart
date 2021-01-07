@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:reduxdemoapp/redux/actions/actions.dart';
-import 'package:reduxdemoapp/redux/selectors/selectors.dart';
+import 'package:reduxdemoapp/approute.dart';
+import 'package:reduxdemoapp/home.dart';
 import 'package:reduxdemoapp/state/appstate.dart';
+import 'package:reduxdemoapp/users.dart';
 
 class ReduxDemoApp extends StatelessWidget {
   final Store<AppState> store;
@@ -16,141 +17,37 @@ class ReduxDemoApp extends StatelessWidget {
         child: StoreConnector<AppState, _ViewModel>(
             converter: _ViewModel.fromStore,
             builder: (context, vm) => MaterialApp(
-                title: "Redux Demo",
-                home: Scaffold(
-                  appBar: AppBar(
-                    title: Text("Redux Demo"),
-                  ),
-                  body: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              Text("Font Size"),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DropdownButton(
-                                    value: vm.fontSize,
-                                    items: [
-                                      DropdownMenuItem(
-                                        child: Text("Small"),
-                                        value: 10.0,
-                                      ),
-                                      DropdownMenuItem(
-                                        child: Text("Medium"),
-                                        value: 20.0,
-                                      ),
-                                      DropdownMenuItem(
-                                          child: Text("Large"), value: 30.0),
-                                      DropdownMenuItem(
-                                          child: Text("Extra Large"),
-                                          value: 40.0)
-                                    ],
-                                    onChanged: (value) {
-                                      StoreProvider.of<AppState>(context)
-                                          .dispatch(SetFontSizeAction(value));
-                                    }),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text("Bold"),
-                              Checkbox(
-                                  value: vm.isBold,
-                                  onChanged: (value) {
-                                    StoreProvider.of<AppState>(context)
-                                        .dispatch(ToggleBoldAction(value));
-                                  }),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text("Italics"),
-                              Checkbox(
-                                  value: vm.isItalic,
-                                  onChanged: (value) {
-                                    StoreProvider.of<AppState>(context)
-                                        .dispatch(ToggleItalicsAction(value));
-                                  }),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 300,
-                              child: Text(
-                                'Welcome to the Home Screen, We are using redux for state management',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: vm.fontSize,
-                                    fontWeight: vm.isBold
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    fontStyle: vm.isItalic
-                                        ? FontStyle.italic
-                                        : FontStyle.normal),
-                              ),
-                            ),
-                          ),
-                          FlatButton.icon(
-                              onPressed: () {
-                                StoreProvider.of<AppState>(context)
-                                    .dispatch(FetchAPIDataAction());
-                              },
-                              icon: Icon(Icons.get_app),
-                              label: Text("Load Users List (API call)"),
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: Colors.black,
-                                      width: 1,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(50))),
-                        ],
-                      ),
-                    ),
-                  ), // This trailing comma makes auto-formatting nicer for build methods.
-                ))));
-
+                title: "Redux Demo App",
+                routes: _buildRoutes(store),
+                home: Home())));
     return result;
   }
 }
 
+Map<String, WidgetBuilder> _buildRoutes(Store store) {
+  return Map<String, WidgetBuilder>.fromIterable(
+    _getRoutes(store),
+    key: (dynamic route) => '${route.routeName}',
+    value: (dynamic route) => route.buildRoute,
+  );
+}
+
+List<AppRoute> _getRoutes(Store store) {
+  final List<AppRoute> routes = <AppRoute>[
+    AppRoute(
+      routeName: '/home',
+      buildRoute: (BuildContext context) => Home(),
+    ),
+    AppRoute(
+      routeName: '/users',
+      buildRoute: (BuildContext context) => Users(),
+    ),
+  ];
+  return routes;
+}
+
 class _ViewModel {
-  final bool isBold;
-  final bool isItalic;
-  final double fontSize;
-
-  _ViewModel({
-    @required this.isBold,
-    @required this.isItalic,
-    @required this.fontSize,
-  });
-
   static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      isBold: boldSelector(store.state),
-      isItalic: italicSelector(store.state),
-      fontSize: fontSizeSelector(store.state),
-    );
+    return _ViewModel();
   }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is _ViewModel &&
-          runtimeType == other.runtimeType &&
-          isBold == other.isBold &&
-          isItalic == other.isItalic &&
-          fontSize == other.fontSize;
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      isBold.hashCode ^
-      isItalic.hashCode ^
-      fontSize.hashCode;
 }

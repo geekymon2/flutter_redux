@@ -9,11 +9,14 @@ final String apiUrl = "https://randomuser.me/api/?results=10";
 
 void storeOptionsMiddleware(
     Store<AppState> store, dynamic action, NextDispatcher next) {
+  
   if (action is FetchAPIDataAction) {
     fetchUsers().then((value) {
       store.dispatch(APIDataLoadedAction(value));
     });
   }
+
+
 
   next(action);
 }
